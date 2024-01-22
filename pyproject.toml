@@ -23,7 +23,7 @@ requires-python = ">=3.9"
 dependencies = [
     "boto3 >=1.28.57, <2",
     "botocore",
-    "ragna ==0.1.2",
+    "ragna >=0.2, <0.3",
 ]
 dynamic = ["version"]
 
