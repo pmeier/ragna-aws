@@ -18,9 +18,6 @@ Put the following, or a subset thereof, into your Ragna configuration file, e.g.
 
 ```toml
 # ...
-
-[core]
-# ...
 document = "ragna_aws.S3Document"
 assistants = [
     # ...
@@ -34,5 +31,7 @@ assistants = [
     "ragna_aws.Llama2Chat70B",
     "ragna_aws.TitanTextExpress",
     "ragna_aws.TitanTextLite",
+    # ...
 ]
+# ...
 ```
