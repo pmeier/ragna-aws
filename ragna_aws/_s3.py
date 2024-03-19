@@ -5,13 +5,13 @@ from typing import Any
 import boto3
 import botocore.exceptions
 from ragna.core import (
-    Config,
     Document,
     DocumentUploadParameters,
     EnvVarRequirement,
     RagnaException,
     Requirement,
 )
+from ragna.deploy import Config
 
 from ._utils import AWS_DEFAULT_REQUIREMENTS
 

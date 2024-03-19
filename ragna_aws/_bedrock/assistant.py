@@ -5,7 +5,7 @@ from typing import Any, Iterator
 import boto3
 import botocore.eventstream
 import botocore.response
-from ragna.core import Assistant, Config, Source
+from ragna.core import Assistant, Source
 
 # https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html
 # https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
@@ -20,8 +20,8 @@ class BedrockAssistant(Assistant):
     def display_name(cls) -> str:
         return f"{cls._PROVIDER}/{cls._MODEL_ID}"
 
-    def __init__(self, config: Config) -> None:
-        super().__init__(config)
+    def __init__(self) -> None:
+        super().__init__()
 
         bedrock = boto3.client("bedrock")
         self._supports_streaming = bedrock.get_foundation_model(
@@ -36,7 +36,7 @@ class BedrockAssistant(Assistant):
 
     def answer(
         self, prompt: str, sources: list[Source], *, max_new_tokens: int = 256
-    ) -> str:
+    ) -> Iterator[str]:
         invoke = getattr(
             self._brt,
             "invoke_model_with_response_stream"
@@ -51,7 +51,7 @@ class BedrockAssistant(Assistant):
             accept="application/json",
             contentType="application/json",
         )
-        return "".join(self._parse_response_body(response.get("body")))
+        return self._parse_response_body(response.get("body"))
 
     @abc.abstractmethod
     def _make_request_body(
